@@ -9,6 +9,7 @@ import retrofit2.http.Query
 interface NewsRoutes {
 
     @GET("v2/top-headlines")
-    fun getListArticle(@Query("sources") sourcesName: String)
+    fun getListArticle(@Query("country") countryId: String,
+                       @Query("category") newsCategory: String)
             : Observable<Response<NewsResponse>>
 }
