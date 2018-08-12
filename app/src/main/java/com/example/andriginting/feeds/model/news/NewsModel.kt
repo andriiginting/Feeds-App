@@ -1,4 +1,4 @@
-package com.example.andriginting.feeds.model
+package com.example.andriginting.feeds.model.news
 
 data class NewsModel(val articleAuthor: String,
                      val articleTitle: String,

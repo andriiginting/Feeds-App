@@ -1,4 +1,4 @@
-package com.example.andriginting.feeds.model
+package com.example.andriginting.feeds.model.news
 
 import com.google.gson.annotations.SerializedName
 
