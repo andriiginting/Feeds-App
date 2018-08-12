@@ -15,9 +15,14 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField("String", "NEWS_API_KEY", "\"6686ad18a02a49838cc8ead6e0f3dd54\"")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField("String", "NEWS_API_KEY", "\"6686ad18a02a49838cc8ead6e0f3dd54\"")
         }
     }
 }
