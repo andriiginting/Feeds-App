@@ -11,14 +11,24 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class NetworkClient {
-    private val BASE_URL = "https://newsapi.org/"
+    private val NEWS_BASE_URL = "https://newsapi.org/"
+    private val HACKERNEWS_BASE_URL ="https://hacker-news.firebaseio.com/"
 
-    fun getRetrofitClient(): Retrofit {
+
+    fun getNewsInstance(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(NEWS_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getClient())
+                .build()
+    }
+
+    fun getHackerNewsInstance(): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(HACKERNEWS_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
     }
 
