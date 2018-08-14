@@ -15,7 +15,11 @@ class NetworkClient {
     private val HACKERNEWS_BASE_URL ="https://hacker-news.firebaseio.com/"
 
 
-    fun getNewsInstance(): Retrofit {
+    fun getNewsServiceRequest() = getNewsInstance().create(NewsRoutes::class.java)
+
+    fun getHackerNewsServiceRequest() = getHackerNewsInstance().create(NewsRoutes::class.java)
+
+    private fun getNewsInstance(): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(NEWS_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -24,7 +28,7 @@ class NetworkClient {
                 .build()
     }
 
-    fun getHackerNewsInstance(): Retrofit {
+    private fun getHackerNewsInstance(): Retrofit {
         return Retrofit.Builder()
                 .baseUrl(HACKERNEWS_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -37,6 +41,8 @@ class NetworkClient {
                 .addInterceptor(loggingInterceptor())
                 .addInterceptor(defaultHttpClient())
                 .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(1, TimeUnit.MINUTES)
+                .writeTimeout(1, TimeUnit.MINUTES)
                 .build()
     }
 

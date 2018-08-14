@@ -31,6 +31,7 @@
             android:padding="@dimen/padding_title_text"
             android:singleLine="true"
             android:text="@string/title_placeholder"
+            android:fontFamily="@font/neo_sans_pro_bold"
             android:textColor="@android:color/white"
             android:textSize="@dimen/title_card_news_size"
             android:textStyle="bold"
