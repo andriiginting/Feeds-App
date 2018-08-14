@@ -17,21 +17,20 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.andriginting.feeds.R
-import com.example.andriginting.feeds.model.news.NewsModel
-import com.example.andriginting.feeds.model.news.NewsResponse
+import com.example.andriginting.feeds.model.news.NewsArticleData
 import com.example.andriginting.feeds.viewmodel.FeedsViewModel
 
 class MainAdapter(listViewModel: FeedsViewModel,
                   lifecycleOwner: LifecycleOwner):
         RecyclerView.Adapter<MainAdapter.ViewHolder>() {
 
-    var listNews: ArrayList<NewsResponse> = ArrayList()
+    var listNews: ArrayList<NewsArticleData> = ArrayList()
 
     init {
-        listViewModel.getAllNews().observe(lifecycleOwner, Observer<NewsResponse>{ repos ->
+        listViewModel.getAllNews().observe(lifecycleOwner, Observer<List<NewsArticleData>> { repos ->
             listNews.clear()
             if (repos != null){
-                listNews.add(repos)
+                listNews.addAll(repos)
                 notifyDataSetChanged()
             }
         })
@@ -48,18 +47,18 @@ class MainAdapter(listViewModel: FeedsViewModel,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(listNews[position],position)
+        holder.bindItem(listNews[position])
     }
 
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private var title: TextView = itemView.findViewById(R.id.title_news_article)
         private var newsImage: ImageView = itemView.findViewById(R.id.image_article)
-        private var loadingProgresBar : ProgressBar = itemView.findViewById(R.id.progbar_item_article)
+        private var loadingProgressBar : ProgressBar = itemView.findViewById(R.id.progbar_item_article)
 
-        fun bindItem(data: NewsResponse,position: Int){
-            title.text = data.articleData?.get(position)?.articletitle
-            data.articleData?.get(position)?.articleImageUrl?.let { bindImageToHolder(it,itemView.context) }
+        fun bindItem(data: NewsArticleData){
+            title.text = data.articletitle
+            data.articleImageUrl?.let { bindImageToHolder(it,itemView.context) }
 
         }
 
@@ -72,7 +71,7 @@ class MainAdapter(listViewModel: FeedsViewModel,
                         }
 
                         override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                            loadingProgresBar.visibility = View.GONE
+                            loadingProgressBar.visibility = View.GONE
                             return false
                         }
 

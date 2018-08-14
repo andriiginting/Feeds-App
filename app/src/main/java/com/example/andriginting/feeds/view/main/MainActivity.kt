@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.example.andriginting.feeds.R
-import com.example.andriginting.feeds.model.news.NewsModel
+import com.example.andriginting.feeds.model.news.NewsArticleData
 import com.example.andriginting.feeds.model.news.NewsResponse
 import com.example.andriginting.feeds.viewmodel.FeedsViewModel
 
@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity() {
 
 
-    lateinit var viewModel: FeedsViewModel
+    private lateinit var viewModel: FeedsViewModel
 
     private lateinit var adapter: MainAdapter
 
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar_main)
 
         viewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
-        viewModel.fetchAllRepo("id","sports")
+        viewModel.fetchAllRepo("us","technology")
 
         adapter = MainAdapter( viewModel,this)
         setupRecycler(adapter)
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeNewsData(){
-        viewModel.getAllNews().observe(this, Observer<NewsResponse> {
+        viewModel.getAllNews().observe(this, Observer<List<NewsArticleData>> {
             //set shimmer gone
         })
     }

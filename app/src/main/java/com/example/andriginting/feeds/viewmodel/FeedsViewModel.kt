@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel
 import android.util.Log
 import android.widget.Toast
 import com.example.andriginting.feeds.model.hackernews.HackerNewsResponse
+import com.example.andriginting.feeds.model.news.NewsArticleData
 import com.example.andriginting.feeds.model.news.NewsModel
 import com.example.andriginting.feeds.model.news.NewsResponse
 import com.example.andriginting.feeds.network.NetworkClient
@@ -19,14 +20,14 @@ class FeedsViewModel : ViewModel() {
 
     val composite: CompositeDisposable? = CompositeDisposable()
 
-    private val newsRepo: MutableLiveData<NewsResponse> = MutableLiveData()
+    private val newsRepo: MutableLiveData<List<NewsArticleData>> = MutableLiveData()
     private val hackerNewsRepo: MutableLiveData<List<HackerNewsResponse>> = MutableLiveData()
 
     private val repoLoadsError: MutableLiveData<Boolean> = MutableLiveData()
     private val repoLoadsLoading: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    fun getAllNews(): LiveData<NewsResponse> {
+    fun getAllNews(): LiveData<List<NewsArticleData>> {
         return newsRepo
     }
 
@@ -45,7 +46,7 @@ class FeedsViewModel : ViewModel() {
                     repoLoadsError.value = false
                     when {
                         response.isSuccessful -> {
-                            newsRepo.value = response.body()
+                            newsRepo.value = response.body()?.articleData
                             Log.d(TAG, response.body().toString())
                         }
                         response.code() == 401 -> Log.d(TAG, response.message().toString())
