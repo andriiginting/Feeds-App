@@ -1,5 +1,7 @@
 package com.example.andriginting.feeds.view.main
 
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.support.v7.widget.RecyclerView
@@ -16,8 +18,24 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.andriginting.feeds.R
 import com.example.andriginting.feeds.model.news.NewsModel
+import com.example.andriginting.feeds.model.news.NewsResponse
+import com.example.andriginting.feeds.viewmodel.FeedsViewModel
 
-class MainAdapter(private val list: List<NewsModel>): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter(listViewModel: FeedsViewModel,
+                  lifecycleOwner: LifecycleOwner):
+        RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+
+    var listNews: ArrayList<NewsResponse> = ArrayList()
+
+    init {
+        listViewModel.getAllNews().observe(lifecycleOwner, Observer<List<NewsResponse>>{ repos ->
+            listNews.clear()
+            if (repos != null){
+                listNews.addAll(repos)
+                notifyDataSetChanged()
+            }
+        })
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -26,11 +44,11 @@ class MainAdapter(private val list: List<NewsModel>): RecyclerView.Adapter<MainA
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return listNews.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(list[position])
+        holder.bindItem(listNews[position],position)
     }
 
 
@@ -39,9 +57,9 @@ class MainAdapter(private val list: List<NewsModel>): RecyclerView.Adapter<MainA
         private var newsImage: ImageView = itemView.findViewById(R.id.image_article)
         private var loadingProgresBar : ProgressBar = itemView.findViewById(R.id.progbar_item_article)
 
-        fun bindItem(data: NewsModel){
-            title.text = data.articleTitle
-            bindImageToHolder(data.articleImageUrl,itemView.context)
+        fun bindItem(data: NewsResponse,position: Int){
+            title.text = data.articleData?.get(position)?.articletitle
+            data.articleData?.get(position)?.articleImageUrl?.let { bindImageToHolder(it,itemView.context) }
 
         }
 
