@@ -19,14 +19,14 @@ class FeedsViewModel : ViewModel() {
 
     val composite: CompositeDisposable? = CompositeDisposable()
 
-    private val newsRepo: MutableLiveData<List<NewsResponse>> = MutableLiveData()
+    private val newsRepo: MutableLiveData<NewsResponse> = MutableLiveData()
     private val hackerNewsRepo: MutableLiveData<List<HackerNewsResponse>> = MutableLiveData()
 
     private val repoLoadsError: MutableLiveData<Boolean> = MutableLiveData()
     private val repoLoadsLoading: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    fun getAllNews(): LiveData<List<NewsResponse>> {
+    fun getAllNews(): LiveData<NewsResponse> {
         return newsRepo
     }
 

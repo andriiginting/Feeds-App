@@ -36,10 +36,11 @@ class MainActivity : AppCompatActivity() {
         feeds_recyclerview.layoutManager = LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,false)
         feeds_recyclerview.adapter = adapter
+        observeNewsData()
     }
 
     private fun observeNewsData(){
-        viewModel.getAllNews().observe(this, Observer<List<NewsResponse>> {
+        viewModel.getAllNews().observe(this, Observer<NewsResponse> {
             //set shimmer gone
         })
     }

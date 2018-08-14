@@ -14,7 +14,7 @@ interface NewsRoutes {
     @GET("v2/top-headlines")
     fun getListArticle(@Query("country") countryId: String,
                        @Query("category") newsCategory: String)
-            : Observable<Response<List<NewsResponse>>>
+            : Observable<Response<NewsResponse>>
 
     @GET("v0/newstories.json")
     fun getHackerNewsListId(): Observable<Response<List<Int>>>

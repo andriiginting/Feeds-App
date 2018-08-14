@@ -28,10 +28,10 @@ class MainAdapter(listViewModel: FeedsViewModel,
     var listNews: ArrayList<NewsResponse> = ArrayList()
 
     init {
-        listViewModel.getAllNews().observe(lifecycleOwner, Observer<List<NewsResponse>>{ repos ->
+        listViewModel.getAllNews().observe(lifecycleOwner, Observer<NewsResponse>{ repos ->
             listNews.clear()
             if (repos != null){
-                listNews.addAll(repos)
+                listNews.add(repos)
                 notifyDataSetChanged()
             }
         })
