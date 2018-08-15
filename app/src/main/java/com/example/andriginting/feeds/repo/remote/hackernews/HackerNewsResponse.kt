@@ -1,4 +1,4 @@
-package com.example.andriginting.feeds.model.hackernews
+package com.example.andriginting.feeds.repo.remote.hackernews
 
 import com.google.gson.annotations.SerializedName
 

@@ -11,15 +11,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.andriginting.feeds.R
 import com.example.andriginting.feeds.di.GlideApp
-import com.example.andriginting.feeds.model.news.NewsArticleData
+import com.example.andriginting.feeds.repo.remote.news.NewsArticleData
 import com.example.andriginting.feeds.viewmodel.FeedsViewModel
 
 class MainAdapter(listViewModel: FeedsViewModel,

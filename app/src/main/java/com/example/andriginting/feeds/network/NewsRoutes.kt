@@ -1,7 +1,7 @@
 package com.example.andriginting.feeds.network
 
-import com.example.andriginting.feeds.model.hackernews.HackerNewsResponse
-import com.example.andriginting.feeds.model.news.NewsResponse
+import com.example.andriginting.feeds.repo.remote.hackernews.HackerNewsResponse
+import com.example.andriginting.feeds.repo.remote.news.NewsResponse
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET

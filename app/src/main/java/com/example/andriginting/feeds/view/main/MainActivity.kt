@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.example.andriginting.feeds.R
-import com.example.andriginting.feeds.model.news.NewsArticleData
+import com.example.andriginting.feeds.repo.remote.news.NewsArticleData
 import com.example.andriginting.feeds.viewmodel.FeedsViewModel
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 

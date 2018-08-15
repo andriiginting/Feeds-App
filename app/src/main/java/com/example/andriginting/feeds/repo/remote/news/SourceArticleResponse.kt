@@ -1,4 +1,4 @@
-package com.example.andriginting.feeds.model.news
+package com.example.andriginting.feeds.repo.remote.news
 
 import com.google.gson.annotations.SerializedName
 

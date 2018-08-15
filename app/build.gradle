@@ -43,6 +43,7 @@ ext {
     archLifecycleVersion = '1.1.1'
     shimmerVersion = '0.3.0'
     paginationVersion = '1.0.1'
+    rxRoomVersion = '1.1.1'
 }
 
 dependencies {
@@ -69,6 +70,7 @@ dependencies {
     //koin di
     implementation "org.koin:koin-android:$koinVersion"
     implementation "org.koin:koin-android-architecture:$koinVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rxRoomVersion"
 
     //lifecycle
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"

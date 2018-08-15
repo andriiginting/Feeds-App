@@ -4,8 +4,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import com.example.andriginting.feeds.model.hackernews.HackerNewsResponse
-import com.example.andriginting.feeds.model.news.NewsArticleData
+import com.example.andriginting.feeds.repo.remote.hackernews.HackerNewsResponse
+import com.example.andriginting.feeds.repo.remote.news.NewsArticleData
 import com.example.andriginting.feeds.network.NetworkClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
