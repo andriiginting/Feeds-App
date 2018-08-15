@@ -28,6 +28,7 @@ android {
             buildConfigField("String", "NEWS_API_KEY", "\"6686ad18a02a49838cc8ead6e0f3dd54\"")
         }
     }
+
 }
 
 ext {
@@ -36,14 +37,17 @@ ext {
     retrofitVersion = '2.3.0'
     okhttpVersion = '3.10.0'
     rxjavaVersion = '2.1.15'
+    rxKotlinAndroid = '2.1.0'
     rxAndroidVersion = '2.0.2'
     glideVersion = '4.7.1'
-    archLifecycleVersion = '1.1.0'
+    archLifecycleVersion = '1.1.1'
+    shimmerVersion = '0.3.0'
+    paginationVersion = '1.0.1'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "com.android.support:appcompat-v7:$androidSupportVersion"
     implementation "com.android.support:design:$androidSupportVersion"
     implementation "com.android.support:cardview-v7:$androidSupportVersion"
@@ -56,6 +60,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     implementation "io.reactivex.rxjava2:rxjava:$rxjavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlinAndroid"
 
     //glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
@@ -63,8 +68,17 @@ dependencies {
 
     //koin di
     implementation "org.koin:koin-android:$koinVersion"
+    implementation "org.koin:koin-android-architecture:$koinVersion"
 
+    //lifecycle
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
+
+    //room
+    implementation "android.arch.persistence.room:runtime:$archLifecycleVersion"
+    kapt "android.arch.persistence.room:compiler:$archLifecycleVersion"
+
+    //pagination
+    implementation "android.arch.paging:runtime:$paginationVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

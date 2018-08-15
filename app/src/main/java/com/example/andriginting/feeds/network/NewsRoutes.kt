@@ -20,6 +20,7 @@ interface NewsRoutes {
     fun getHackerNewsListId(): Observable<Response<List<Int>>>
 
     @GET("v0/item/{id}.json")
-    fun getHackerNewsItems(@Path("id") itemId: Int): Observable<Response<List<HackerNewsResponse>>>
+    fun getHackerNewsItems(@Path("id") itemId: Int)
+            : Observable<Response<List<HackerNewsResponse>>>
 
 }

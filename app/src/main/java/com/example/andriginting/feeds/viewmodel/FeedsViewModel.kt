@@ -4,11 +4,8 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import android.widget.Toast
 import com.example.andriginting.feeds.model.hackernews.HackerNewsResponse
 import com.example.andriginting.feeds.model.news.NewsArticleData
-import com.example.andriginting.feeds.model.news.NewsModel
-import com.example.andriginting.feeds.model.news.NewsResponse
 import com.example.andriginting.feeds.network.NetworkClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,6 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import java.io.IOException
 
 class FeedsViewModel : ViewModel() {
+
     private val TAG = "feedsViewModel"
 
     val composite: CompositeDisposable? = CompositeDisposable()
@@ -31,8 +29,15 @@ class FeedsViewModel : ViewModel() {
         return newsRepo
     }
 
+
+    fun getHackerNews(): LiveData<List<HackerNewsResponse>> {
+        return hackerNewsRepo
+    }
+
+
     fun fetchAllRepo(country: String, category: String) {
-        getListOfNewsArticle(country,category)
+        getListOfNewsArticle(country, category)
+        //getHackerNewsArticle()
     }
 
     private fun getListOfNewsArticle(country: String, category: String) {
@@ -63,5 +68,29 @@ class FeedsViewModel : ViewModel() {
                 })
     }
 
+    private fun getHackerNewsArticle() {
+        NetworkClient().getHackerNewsServiceRequest()
+                .getHackerNewsListId()
+                .flatMap { id ->
+                    id.body()?.let {
+                        NetworkClient().getHackerNewsServiceRequest()
+                                .getHackerNewsItems(id.body()!!.asIterable().iterator().next())
+                    }
+
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { hackerNewsResponse ->
+                    when {
+                        hackerNewsResponse.isSuccessful -> {
+                            hackerNewsRepo.value = hackerNewsResponse.body()
+                            Log.d("listHN", hackerNewsRepo.value.toString())
+                        }
+                        hackerNewsResponse.code() == 401 -> Log.d(TAG, hackerNewsResponse.message().toString())
+                        hackerNewsResponse.code() == 400 -> Log.d(TAG, hackerNewsResponse.message().toString())
+                    }
+
+                }
+    }
 
 }
