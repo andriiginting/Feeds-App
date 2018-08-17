@@ -33,6 +33,16 @@ class NetworkClient {
                 .baseUrl(HACKERNEWS_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(getHackerNewsClient())
+                .build()
+    }
+
+    private fun getHackerNewsClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor())
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .readTimeout(1, TimeUnit.MINUTES)
+                .writeTimeout(1, TimeUnit.MINUTES)
                 .build()
     }
 
@@ -51,6 +61,8 @@ class NetworkClient {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         return interceptor
     }
+
+
 
     @Throws(IOException::class)
     private fun defaultHttpClient(): Interceptor {
