@@ -9,6 +9,7 @@ import com.example.andriginting.feeds.repo.remote.news.NewsArticleData
 import com.example.andriginting.feeds.network.NetworkClient
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observables.ConnectableObservable
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
 
@@ -16,8 +17,7 @@ class FeedsViewModel : ViewModel() {
 
     private val TAG = "feedsViewModel"
 
-    val composite: CompositeDisposable? = CompositeDisposable()
-
+    private val list: ArrayList<HackerNewsResponse> = ArrayList()
     private val newsRepo: MutableLiveData<List<NewsArticleData>> = MutableLiveData()
     private val hackerNewsRepo: MutableLiveData<List<HackerNewsResponse>> = MutableLiveData()
 
@@ -37,7 +37,8 @@ class FeedsViewModel : ViewModel() {
 
     fun fetchAllRepo(country: String, category: String) {
         getListOfNewsArticle(country, category)
-        //getHackerNewsArticle()
+        getHackerNewsArticle()
+
     }
 
     private fun getListOfNewsArticle(country: String, category: String) {
@@ -71,26 +72,42 @@ class FeedsViewModel : ViewModel() {
     private fun getHackerNewsArticle() {
         NetworkClient().getHackerNewsServiceRequest()
                 .getHackerNewsListId()
-                .flatMap { id ->
-                    id.body()?.let {
-                        NetworkClient().getHackerNewsServiceRequest()
-                                .getHackerNewsItems(id.body()!!.asIterable().iterator().next())
-                    }
-
-                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { hackerNewsResponse ->
+                .subscribe({ response ->
+                    repoLoadsLoading.value = false
+                    repoLoadsError.value = false
                     when {
-                        hackerNewsResponse.isSuccessful -> {
-                            hackerNewsRepo.value = hackerNewsResponse.body()
-                            Log.d("listHN", hackerNewsRepo.value.toString())
-                        }
-                        hackerNewsResponse.code() == 401 -> Log.d(TAG, hackerNewsResponse.message().toString())
-                        hackerNewsResponse.code() == 400 -> Log.d(TAG, hackerNewsResponse.message().toString())
-                    }
+                        response.isSuccessful -> {
+                            for (result in 0..20) {
+                                NetworkClient().getHackerNewsServiceRequest()
+                                        .getHackerNewsItems(response.body()!![result])
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe {
+                                            it.body()?.let { it1 -> list.add(it1) }
+                                            hackerNewsRepo.value = list
 
-                }
+                                            Log.d("listhackerapp", it.body().toString())
+                                        }
+                            }
+                            Log.d("listhacker", response.body().toString())
+                            Log.d("listhackersize", response.body().toString())
+
+                        }
+                        response.code() == 401 -> Log.d("listhacker", response.message().toString())
+                        response.code() == 400 -> Log.d("listhacker", response.message().toString())
+                    }
+                }, { error ->
+                    repoLoadsError.value = true
+                    repoLoadsLoading.value = false
+                    try {
+                        Log.e(TAG, error.fillInStackTrace().message.toString())
+                    } catch (e: IOException) {
+                        Log.e(TAG, e.stackTrace.toString())
+                    }
+                })
+
     }
 
 }
