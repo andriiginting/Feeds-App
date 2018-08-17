@@ -1,6 +1,8 @@
 package com.example.andriginting.feeds.network
 
 import com.example.andriginting.feeds.BuildConfig
+import com.example.andriginting.feeds.utils.Const.HACKER_NEWS_BASE_URL
+import com.example.andriginting.feeds.utils.Const.NEWS_API_BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,9 +13,6 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class NetworkClient {
-    private val NEWS_BASE_URL = "https://newsapi.org/"
-    private val HACKERNEWS_BASE_URL ="https://hacker-news.firebaseio.com/"
-
 
     fun getNewsServiceRequest() = getNewsInstance().create(NewsRoutes::class.java)
 
@@ -21,7 +20,7 @@ class NetworkClient {
 
     private fun getNewsInstance(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(NEWS_BASE_URL)
+                .baseUrl(NEWS_API_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getClient())
@@ -30,7 +29,7 @@ class NetworkClient {
 
     private fun getHackerNewsInstance(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl(HACKERNEWS_BASE_URL)
+                .baseUrl(HACKER_NEWS_BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getHackerNewsClient())
