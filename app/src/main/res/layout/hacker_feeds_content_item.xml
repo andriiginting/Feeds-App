@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_article"
+    android:layout_width="match_parent"
+    android:layout_height="190dp"
+    android:layout_margin="@dimen/card_margin"
+    android:padding="5dp"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/hacker_image_article"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/type_hacker_article"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:background="@color/pastelGreen"
+            android:fontFamily="@font/neo_sans_pro_bold"
+            android:padding="@dimen/padding_title_text"
+            android:src="@color/cardview_shadow_end_color"
+            android:text="@string/news_types_placeholder"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:background="@color/transparant_background">
+
+            <TextView
+                android:id="@+id/title_hacker_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/neo_sans_pro_bold"
+                android:padding="@dimen/padding_title_text"
+                android:singleLine="true"
+                android:text="@string/title_placeholder"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title_card_news_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</android.support.v7.widget.CardView>
