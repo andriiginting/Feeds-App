@@ -37,7 +37,6 @@ class FeedsViewModel : ViewModel() {
 
     fun fetchAllRepo(country: String, category: String) {
         getListOfNewsArticle(country, category)
-        //getHackerNewsArticle()
         fetchHN()
 
     }
@@ -70,7 +69,7 @@ class FeedsViewModel : ViewModel() {
                 })
     }
 
-    fun fetchHN() {
+    private fun fetchHN() {
         NetworkClient().getHackerNewsServiceRequest()
                 .getHackerNewsListId()
                 .flattenAsObservable { it.body() }
@@ -81,10 +80,18 @@ class FeedsViewModel : ViewModel() {
                 .filter { list.size < 21 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe({
                     it.body()?.let { it1 -> list.add(it1) }
                     hackerNewsRepo.value = list
-                }
+                }, { error ->
+                    repoLoadsError.value = true
+                    repoLoadsLoading.value = false
+                    try {
+                        Log.e(TAG, error.fillInStackTrace().message.toString())
+                    } catch (e: IOException) {
+                        Log.e(TAG, e.stackTrace.toString())
+                    }
+                })
     }
 
 }
