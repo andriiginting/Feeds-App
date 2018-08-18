@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit
 
 class NetworkClient {
 
-    fun getNewsServiceRequest() = getNewsInstance().create(NewsRoutes::class.java)
+    fun getNewsServiceRequest(): NewsRoutes = getNewsInstance().create(NewsRoutes::class.java)
 
-    fun getHackerNewsServiceRequest() = getHackerNewsInstance().create(NewsRoutes::class.java)
+    fun getHackerNewsServiceRequest(): NewsRoutes = getHackerNewsInstance().create(NewsRoutes::class.java)
 
     private fun getNewsInstance(): Retrofit {
         return Retrofit.Builder()
