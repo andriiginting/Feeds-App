@@ -11,11 +11,15 @@ import com.example.andriginting.feeds.viewmodel.FeedsViewModel
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.koin.android.architecture.ext.viewModel
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity() {
 
 
-    private lateinit var viewModel: FeedsViewModel
+    private val viewModel by inject<FeedsViewModel>()
 
     private lateinit var adapter: MainAdapter
 
@@ -24,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar_main)
 
-        viewModel = ViewModelProviders.of(this).get(FeedsViewModel::class.java)
         viewModel.fetchAllRepo("us","technology")
 
         adapter = MainAdapter( viewModel,this)
