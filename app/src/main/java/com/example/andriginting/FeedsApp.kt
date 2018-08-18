@@ -10,6 +10,6 @@ class FeedsApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        startKoin(this, listOf(AppModule().feedModule))
+        startKoin(this, listOf(AppModule().appModule))
     }
 }

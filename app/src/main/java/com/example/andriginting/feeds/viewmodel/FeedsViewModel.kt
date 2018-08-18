@@ -24,6 +24,7 @@ class FeedsViewModel : ViewModel() {
     private val repoLoadsError: MutableLiveData<Boolean> = MutableLiveData()
     private val repoLoadsLoading: MutableLiveData<Boolean> = MutableLiveData()
 
+    private val hackerInstance = NetworkClient().getHackerNewsServiceRequest()
 
     fun getAllNews(): LiveData<List<NewsArticleData>> {
         return newsRepo
