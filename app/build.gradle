@@ -44,6 +44,7 @@ ext {
     shimmerVersion = '0.3.0'
     paginationVersion = '1.0.1'
     rxRoomVersion = '1.1.1'
+    koinViewModel = '1.0.0-beta-6'
 }
 
 dependencies {
@@ -70,6 +71,7 @@ dependencies {
     //koin di
     implementation "org.koin:koin-android:$koinVersion"
     implementation "org.koin:koin-android-architecture:$koinVersion"
+    implementation "org.koin:koin-android-viewmodel:$koinViewModel"
 
     //lifecycle
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
