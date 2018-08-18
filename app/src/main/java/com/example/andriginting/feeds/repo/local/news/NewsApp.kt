@@ -3,7 +3,6 @@ package com.example.andriginting.feeds.repo.local.news
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import com.example.andriginting.feeds.utils.Const.NEWS_DB_NAME
 
 @Entity(tableName = "news")
 data class NewsApp(
