@@ -37,7 +37,8 @@ class FeedsViewModel : ViewModel() {
 
     fun fetchAllRepo(country: String, category: String) {
         getListOfNewsArticle(country, category)
-        getHackerNewsArticle()
+        //getHackerNewsArticle()
+        fetchHN()
 
     }
 
@@ -69,45 +70,21 @@ class FeedsViewModel : ViewModel() {
                 })
     }
 
-    private fun getHackerNewsArticle() {
+    fun fetchHN() {
         NetworkClient().getHackerNewsServiceRequest()
                 .getHackerNewsListId()
+                .flattenAsObservable { it.body() }
+                .flatMap { response ->
+                    NetworkClient().getHackerNewsServiceRequest()
+                            .getHackerNewsItems(response)
+                }
+                .filter { list.size < 21 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
-                    repoLoadsLoading.value = false
-                    repoLoadsError.value = false
-                    when {
-                        response.isSuccessful -> {
-                            for (result in 0..20) {
-                                NetworkClient().getHackerNewsServiceRequest()
-                                        .getHackerNewsItems(response.body()!![result])
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe {
-                                            it.body()?.let { it1 -> list.add(it1) }
-                                            hackerNewsRepo.value = list
-
-                                            Log.d("listhackerapp", it.body().toString())
-                                        }
-                            }
-                            Log.d("listhacker", response.body().toString())
-                            Log.d("listhackersize", response.body().toString())
-
-                        }
-                        response.code() == 401 -> Log.d("listhacker", response.message().toString())
-                        response.code() == 400 -> Log.d("listhacker", response.message().toString())
-                    }
-                }, { error ->
-                    repoLoadsError.value = true
-                    repoLoadsLoading.value = false
-                    try {
-                        Log.e(TAG, error.fillInStackTrace().message.toString())
-                    } catch (e: IOException) {
-                        Log.e(TAG, e.stackTrace.toString())
-                    }
-                })
-
+                .subscribe {
+                    it.body()?.let { it1 -> list.add(it1) }
+                    hackerNewsRepo.value = list
+                }
     }
 
 }
