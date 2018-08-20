@@ -45,6 +45,7 @@ ext {
     paginationVersion = '1.0.1'
     rxRoomVersion = '1.1.1'
     koinViewModel = '1.0.0-beta-6'
+    daggerVersion = '2.13'
 }
 
 dependencies {
@@ -72,6 +73,11 @@ dependencies {
     implementation "org.koin:koin-android:$koinVersion"
     implementation "org.koin:koin-android-architecture:$koinVersion"
     implementation "org.koin:koin-android-viewmodel:$koinViewModel"
+
+    //dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     //lifecycle
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
