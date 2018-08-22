@@ -3,17 +3,18 @@ package com.example.andriginting.feeds.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.content.Context
 import android.util.Log
 import com.example.andriginting.feeds.repo.remote.hackernews.HackerNewsResponse
 import com.example.andriginting.feeds.repo.remote.news.NewsArticleData
 import com.example.andriginting.feeds.network.NetworkClient
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observables.ConnectableObservable
 import io.reactivex.schedulers.Schedulers
 import java.io.IOException
 
-class FeedsViewModel : ViewModel() {
+
+
+class FeedsViewModel(val context: Context) : ViewModel() {
 
     private val TAG = "feedsViewModel"
 
@@ -24,7 +25,6 @@ class FeedsViewModel : ViewModel() {
     private val repoLoadsError: MutableLiveData<Boolean> = MutableLiveData()
     private val repoLoadsLoading: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val hackerInstance = NetworkClient().getHackerNewsServiceRequest()
 
     fun getAllNews(): LiveData<List<NewsArticleData>> {
         return newsRepo
@@ -78,7 +78,6 @@ class FeedsViewModel : ViewModel() {
                     NetworkClient().getHackerNewsServiceRequest()
                             .getHackerNewsItems(response)
                 }
-                .filter { list.size < 21 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
