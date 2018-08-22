@@ -3,6 +3,8 @@ package com.example.andriginting.feeds.network
 import com.example.andriginting.feeds.BuildConfig
 import com.example.andriginting.feeds.utils.Const.HACKER_NEWS_BASE_URL
 import com.example.andriginting.feeds.utils.Const.NEWS_API_BASE_URL
+import dagger.Module
+import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -11,11 +13,17 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
+@Module
 class NetworkClient {
 
+    @Provides
+    @Singleton
     fun getNewsServiceRequest(): NewsRoutes = getNewsInstance().create(NewsRoutes::class.java)
 
+    @Provides
+    @Singleton
     fun getHackerNewsServiceRequest(): NewsRoutes = getHackerNewsInstance().create(NewsRoutes::class.java)
 
     private fun getNewsInstance(): Retrofit {
