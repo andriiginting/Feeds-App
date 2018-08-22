@@ -6,4 +6,5 @@
     <dimen name="padding_title_text">8dp</dimen>
     <dimen name="title_card_news_size">18sp</dimen>
     <dimen name="drawable_text_padding">7dp</dimen>
+    <dimen name="top_margin">10dp</dimen>
 </resources>
