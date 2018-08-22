@@ -17,7 +17,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.andriginting.feeds.R
 import com.example.andriginting.feeds.di.GlideApp
-import com.example.andriginting.feeds.repo.remote.hackernews.HackerNewsResponse
 import com.example.andriginting.feeds.repo.remote.news.NewsArticleData
 import com.example.andriginting.feeds.viewmodel.FeedsViewModel
 

@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import com.example.andriginting.feeds.R
 import com.example.andriginting.feeds.repo.remote.hackernews.HackerNewsResponse
 import com.example.andriginting.feeds.repo.remote.news.NewsArticleData
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupHackerRecycler(adapter: HackerNewsAdapter) {
         hacker_recyclerview.layoutManager = LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false)
+        hacker_recyclerview.addItemDecoration(DividerItemDecoration(applicationContext,DividerItemDecoration.VERTICAL))
         hacker_recyclerview.adapter = adapter
         observeNewsData()
     }
