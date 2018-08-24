@@ -35,6 +35,14 @@ class FeedsViewModel(val context: Context) : ViewModel() {
         return hackerNewsRepo
     }
 
+    fun getLoadingData(): LiveData<Boolean>{
+        return repoLoadsLoading
+    }
+
+    fun geErrorData(): LiveData<Boolean>{
+        return repoLoadsError
+    }
+
 
     fun fetchAllRepo(country: String, category: String) {
         getListOfNewsArticle(country, category)
@@ -56,8 +64,14 @@ class FeedsViewModel(val context: Context) : ViewModel() {
                             newsRepo.value = response.body()?.articleData
                             Log.d(TAG, response.body().toString())
                         }
-                        response.code() == 401 -> Log.d(TAG, response.message().toString())
-                        response.code() == 400 -> Log.d(TAG, response.message().toString())
+                        response.code() == 401 -> {
+                            repoLoadsLoading.value = false
+                            Log.d(TAG, response.message().toString())
+                        }
+                        response.code() == 400 -> {
+                            repoLoadsLoading.value = false
+                            Log.d(TAG, response.message().toString())
+                        }
                     }
                 }, { error ->
                     repoLoadsError.value = true
@@ -82,6 +96,7 @@ class FeedsViewModel(val context: Context) : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     it.body()?.let { it1 -> list.add(it1) }
+                    repoLoadsLoading.value = false
                     hackerNewsRepo.value = list
                 }, { error ->
                     repoLoadsError.value = true
