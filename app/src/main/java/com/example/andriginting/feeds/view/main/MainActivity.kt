@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         news_recyclerview.layoutManager = LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false)
         news_recyclerview.adapter = adapter
-        observeNewsData()
+        observeHackerNewsData()
     }
 
     private fun setupHackerRecycler(adapter: HackerNewsAdapter) {
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeHackerNewsData() {
         viewModel.getHackerNews().observe(this, Observer<List<HackerNewsResponse>> {
-            //set shimmer gone
+            news_recyclerview.visibility = if (it?.isEmpty()!!) View.GONE else View.VISIBLE
         })
     }
 
