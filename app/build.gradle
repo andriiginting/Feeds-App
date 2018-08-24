@@ -89,6 +89,9 @@ dependencies {
 
     //pagination
     implementation "android.arch.paging:runtime:$paginationVersion"
+    implementation "android.arch.paging:rxjava2:$paginationVersion"
+
+    implementation "com.facebook.shimmer:shimmer:$shimmerVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
