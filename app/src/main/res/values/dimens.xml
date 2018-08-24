@@ -8,4 +8,5 @@
     <dimen name="title_card_hacker_news_size">15sp</dimen>
     <dimen name="drawable_text_padding">7dp</dimen>
     <dimen name="top_margin">10dp</dimen>
+    <dimen name="padding_viewholder">4dp</dimen>
 </resources>
